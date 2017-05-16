@@ -9,5 +9,9 @@
 2. 提交源代码
 3. 要求结果能用可视的方法表示出来（图或者采用数据结构中学过的方法） 
 
+## Process
 
+### Lexical Analysis
 
+**Key Words**:const, static, do, while, for, switch, case, default, if, else, break, continue, goto, return, void, int, float, double, char 
+**operator**: +, -, *, /, &&, ||
