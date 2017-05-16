@@ -81,7 +81,7 @@ tab [\t]+
 	return INTEGER;
 }
 {string} { return STRING;}
-{newline} {lineno++;
+{newline} {linenum++;
 curLine = space;}
 {whitespace} {}
 {tab} {}
@@ -101,13 +101,13 @@ int getToken(void) {
 		firstIn = FALSE;
 		yyin = source;
 		yyout = listing;
-		lineno++;
+		linenum++;
 	}
 	curToken = yylex();
 	currentToken = yytext;
 	curLine = curLine + yytext;
 	if (traceScan) {
-		fprintf(listing, "\t%d %s\n", lineno, yytext);
+		fprintf(listing, "\t%d %s\n", linenum, yytext);
 		fflush(listing);
 	}	
 	return curToken;
