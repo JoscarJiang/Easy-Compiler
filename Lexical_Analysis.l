@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-int lineno;
+int linenum;
 FILE *source;
 FILE *listing;
 std::string currentToken;
@@ -59,15 +59,19 @@ tab [\t]+
 "for" { return FOR;}
 "switch"{ return SWITCH;}
 "case" { return CASE;}
+"default" { return DEFAULT;}
 "if" { return IF;}
 "else" { return ELSE;}
 "break" { return BREAK;}
 "continue"{ return CONTINUE;}
 "goto" { return GOTO;}
+"return" { return RETURN;}
+"void" { return VOID;}
 "int"	 {return SYS_TYPE;} 
 "double" {return SYS_TYPE;}
 "float" {return SYS_TYPE;}
 "char"  {return SYS_TYPE;}
+
 {real} { return REAL;}
 {integer}{return INTEGER;} 
 {char} { return CHAR;}
