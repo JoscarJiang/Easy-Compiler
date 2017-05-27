@@ -1,19 +1,23 @@
 %{
-#include "public.h"
-#include "scanner.h"
-#include "parser.hpp"
-#include "utils.h"
-#include <cstdio>
+//#include "public.h"
+//#include "scanner.h"
+//#include "parser.hpp"
+//#include "utils.h"
+//#include <cstdio>
+#include <y.tab.h>
 #include <iostream>
 #include <string>
 using namespace std;
+
 int linenum;
 FILE *source;
 FILE *listing;
-std::string currentToken;
+string currentToken;
+
 int traceScan = TRUE;
 string curLine;
 string space(" ");
+
 %}
 
 digit [0-9]
