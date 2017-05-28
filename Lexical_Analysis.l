@@ -1,24 +1,29 @@
 %{
-#include "public.h"
-#include "scanner.h"
-#include "parser.hpp"
-#include "utils.h"
-#include <cstdio>
+//#include "public.h"
+//#include "scanner.h"
+//#include "parser.hpp"
+//#include "utils.h"
+//#include <cstdio>
+#include <y.tab.h>
 #include <iostream>
 #include <string>
+#include <stdio.h>
 using namespace std;
+
 int linenum;
 FILE *source;
 FILE *listing;
-std::string currentToken;
+string currentToken;
+
 int traceScan = TRUE;
 string curLine;
 string space(" ");
+
 %}
 
 digit [0-9]
-integer {digit}+
-real {integer}[\.]{integer}
+int {digit}+
+double {int}[\.]{int}
 letter [a-zA-Z]
 char \'[.]\'
 string \"[^"]*\"
@@ -26,9 +31,10 @@ id ({letter}|_)+({letter}|_|{digit})*
 newline \n
 whitespace [" "]+
 tab [\t]+
-//name ({letter}|_)+({letter}|_|{digit})+
+
 
 %%
+
 "+" { return PLUS;}
 "-" { return MINUS;}
 "*" { return MUL;}
@@ -43,7 +49,7 @@ tab [\t]+
 "!=" { return UNEQ;}
 ">" { return GT;}
 ">=" { return GE;}
-">" { return LT;}
+"<" { return LT;}
 "<=" { return LE;}
 "(" { return LP;}
 ")" { return RP;}
@@ -57,29 +63,33 @@ tab [\t]+
 "do" { return DO;}
 "while" { return WHILE;}
 "for" { return FOR;}
-"switch"{ return SWITCH;}
+"switch" { return SWITCH;}
 "case" { return CASE;}
 "default" { return DEFAULT;}
 "if" { return IF;}
 "else" { return ELSE;}
 "break" { return BREAK;}
-"continue"{ return CONTINUE;}
+"continue" { return CONTINUE;}
 "goto" { return GOTO;}
 "return" { return RETURN;}
 "void" { return VOID;}
 "int"	 {return SYS_TYPE;} 
 "double" {return SYS_TYPE;}
-"float" {return SYS_TYPE;}
 "char"  {return SYS_TYPE;}
 
-{real} { return REAL;}
-{integer}{return INTEGER;} 
-{char} { return CHAR;}
-{integer} {
+{double} { 
 	TreeNode *t = new TreeNode(yytext);
 	yylval = t;
-	return INTEGER;
-}
+	return DOUBLE;}
+{char} { 
+TreeNode *t = new TreeNode(yytext);
+	yylval = t;
+return CHAR;}
+{int} {
+	TreeNode *t = new TreeNode(yytext);
+	yylval = t;
+	return INT;}
+
 {string} { return STRING;}
 {newline} {linenum++;
 curLine = space;}
@@ -88,8 +98,7 @@ curLine = space;}
 {id} {
 	TreeNode *t = new TreeNode(yytext);
 	yylval = t;
-	return ID;
-}
+	return ID;}
 
 %%
 

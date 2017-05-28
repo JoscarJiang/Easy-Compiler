@@ -1,0 +1,14 @@
+.data
+.text
+add $fp,$sp,$zero
+addi $sp,$sp,-4
+addi $t0,$zero,5
+sw $t0, 0($fp)
+addi $t1,$zero,2
+sw $t1, 0($fp)
+addi $a0,$zero,2
+addi $v0, $zero, 1
+syscall
+addi $sp,$sp,4
+j exit
+exit:
