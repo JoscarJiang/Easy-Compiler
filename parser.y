@@ -89,7 +89,6 @@ EQUAL  const_value  SEMI {
   $$->insert(new ConstTreeNode($1->getName(), $3));
 }
 ;
-
 const_value : INTEGER     {tp("const value 1");$$ = new NumberTreeNode(currentToken, "integer");}
               |  REAL     {tp("const value 2");$$ = new NumberTreeNode(currentToken, "real");
                           constRealMap[currentToken] = labelManager->getRealLabel();
@@ -100,13 +99,11 @@ const_value : INTEGER     {tp("const value 1");$$ = new NumberTreeNode(currentTo
                           }  
               |  SYS_CON  {tp("const value 5");$$ = new NumberTreeNode(currentToken, "sys_con");}  
               ;
-
 type_part : TYPE type_decl_list {
   tp("type part 1");
   $$ = $2;
 } |  {tp("type part 2"); $$ = new ListTreeNode("non type part");}
 ;
-
 type_decl_list : type_decl_list  type_definition 
 {
   tp("type_decl_list 1");
@@ -120,30 +117,25 @@ type_decl_list : type_decl_list  type_definition
   $$ = new ListTreeNode("type_decl_list",list);
 }
 ;
-
 type_definition : ID EQUAL  type_decl  SEMI {
   tp("type_definition");
   $$ = new CustomTypeTreeNode($1->getName(), $3);
 }
 ;
-
 type_decl : simple_type_decl  {tp("type_decl 1");$$ = $1;} 
           |  array_type_decl  {tp("type_decl 2");$$ = $1;} 
           |  record_type_decl {tp("type_decl 3");$$ = $1;} 
 ;
-
 array_type_decl : ARRAY  LB  simple_type_decl  RB  OF  type_decl {
   tp("array_type_decl");
   $$ = new ArrayTypeTreeNode($3,$6);
 }
 ;
-
 record_type_decl : RECORD  field_decl_list  END {
   tp("record_type_decl");
   $$ = new RecordTypeTreeNode($2);
 }
 ;
-
 field_decl_list : field_decl_list  field_decl  {
   tp("field_decl_list 1");
   $$ = $1;
@@ -156,13 +148,11 @@ field_decl_list : field_decl_list  field_decl  {
   $$ = new ListTreeNode("field_decl_list",list);
 }
 ;
-
 field_decl : name_list  COLON  type_decl  SEMI {
   tp("field_decl");
   $$ = new VariableTreeNode($1, $3);
 }
 ;
-
 simple_type_decl : SYS_TYPE {                
                   tp("simple_type_decl 1");
                   $$ = new SysTypeTreeNode(currentToken);
@@ -200,13 +190,11 @@ simple_type_decl : SYS_TYPE {
                   $$ = new RecordElemTreeNode($1->getName(), $3->getName());
                 }
 ;
-
 var_part : VAR  var_decl_list {
   tp("var part 1");
   $$ = $2;
 } |  {tp("var part 2");$$ = new ListTreeNode("non var part");}
 ;
-
 var_decl_list : var_decl_list  var_decl {
   tp("var_decl_list 1");
   $$ = $1;
